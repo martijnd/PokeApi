@@ -4,8 +4,9 @@ module.exports = {
     browser: true,
     node: true
   },
+  plugins: ['@typescript-eslint', 'prettier'],
   parserOptions: {
-    parser: 'babel-eslint'
+    parser: '@typescript-eslint/parser'
   },
   extends: [
     '@nuxtjs',
@@ -14,8 +15,9 @@ module.exports = {
     'prettier',
     'prettier/vue'
   ],
-  plugins: ['prettier'],
-  // add your custom rules here
+  rules: {
+    '@typescript-eslint/no-unused-vars': 'warning'
+  },
   rules: {
     semi: [2, 'always']
   }
