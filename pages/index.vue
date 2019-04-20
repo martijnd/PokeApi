@@ -1,6 +1,7 @@
 <template>
   <v-layout column justify-center align-center>
     <v-flex xs12 sm8 md6>
+      <input type="number" @input="fetchPokemon($event.target.value)" />
       <div class="text-xs-center">
         {{ pokemon ? pokemon.name : 'Loading...' }}
       </div>
@@ -12,14 +13,13 @@
 export default {
   data() {
     return {
-      ip: null,
       pokemon: null
     };
   },
-  async mounted() {
-    this.pokemon = await this.$axios.$get(
-      'https://pokeapi.co/api/v2/pokemon/1/'
-    );
+  methods: {
+    async fetchPokemon(id) {
+      this.pokemon = await this.$api.get(`${id}`);
+    }
   }
 };
 </script>
