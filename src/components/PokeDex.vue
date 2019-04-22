@@ -1,43 +1,70 @@
 <template>
     <div class="container">
-        <h1 v-if="pokemon">{{ pokemon.name }}</h1>
         <div v-if="pokemon" class="pokedex-wrapper">
-            <div class="left-panel">
-                <div class="picture-screen"></div>
-                <div class="controls">
- 
-                </div>
-            </div>
-            <div class="right-panel">
-                <div class="info-screen"></div>
-                <div class="number-pad">
-
-                </div>
-            </div>
+            <LeftPanel :pokemon="pokemon"/>
+            <RightPanel 
+                :pokemon="pokemon"
+                @increment="increment" 
+                @decrement="decrement" 
+                :loading="loading" />
         </div>  
     </div>
 </template>
  
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { State, Action, Getter } from 'vuex-class';
-import { Pokemon, PokemonState } from "../models/Pokemon";
+import { Pokemon } from '../models/Pokemon';
+import LeftPanel from './LeftPanel.vue';
+import RightPanel from './RightPanel.vue';
+import pokeapi from '../api/pokeapi';
 import { AxiosResponse } from 'axios';
-const namespace: string = 'pokemon';
-
+ 
 @Component({
-   
+   components: {
+       LeftPanel, RightPanel
+   }
 })
 export default class PokeDex extends Vue {
-    @State('pokemon') pokemon!: PokemonState;
-    @Action('fetchPokemon', { namespace }) fetchPokemon: any;
+    pokemon: Pokemon | {} = {};
+    currentId: number = 1;
+    loading: boolean = false;
 
-    mounted() {
+    async fetchPokemon(id: number): Promise<void> {
+        this.loading = true;
+        this.currentId = id;
+        pokeapi.get(`${id}`).then((response: AxiosResponse<Pokemon>) => { 
+            this.pokemon = response.data; 
+            this.loading = false; 
+        });
+    }
+
+    increment(): void {
+        this.fetchPokemon(this.currentId + 1);
+    }
+
+    decrement(): void {
+        this.fetchPokemon(this.currentId - 1);
+    }
+
+    mounted(): void {
         this.fetchPokemon(1);
     }
 }
 </script>
 
 <style lang="scss" scoped>
+$red: #f70002;
 
+.container {
+    display: flex;
+    justify-content: center;
+    .pokedex-wrapper {
+        display: flex;
+        background-color: $red;
+        width: 600px;
+        height: 600px;
+        flex-direction: row;
+        align-items: stretch;
+    }
+}
 </style>
