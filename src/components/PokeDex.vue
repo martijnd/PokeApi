@@ -20,21 +20,19 @@
  
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { Pokemon } from "../models/Pokemon";
+import { State, Action, Getter } from 'vuex-class';
+import { Pokemon, PokemonState } from "../models/Pokemon";
 import { AxiosResponse } from 'axios';
+const namespace: string = 'pokemon';
 
 @Component({
    
 })
 export default class PokeDex extends Vue {
-    pokemon: Pokemon | {} = {};
+    @State('pokemon') pokemon!: PokemonState;
+    @Action('fetchPokemon', { namespace }) fetchPokemon: any;
 
-    async fetchPokemon(pokemonId: number): Promise<void> {
-        this.$http.get(`https://pokeapi.co/api/v2/pokemon/${pokemonId}/`)
-        .then((response: AxiosResponse<Pokemon>) => this.pokemon = response.data);
-    }
-
-    mounted(){
+    mounted() {
         this.fetchPokemon(1);
     }
 }
