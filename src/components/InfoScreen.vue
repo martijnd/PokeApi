@@ -17,11 +17,12 @@ export default class LeftPanel extends Vue {
     @Prop() pokemon!: Pokemon;
 
     get computedHeight(): number {
+        console.log(this.pokemon.name);
         return this.pokemon.height * 10;
     }
 
     get computedWeight(): number {
-        return this.pokemon.weight / 100;
+        return this.pokemon.weight / 10;
     }
 }
 

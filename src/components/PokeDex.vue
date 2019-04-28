@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div v-if="pokemon" class="pokedex-wrapper">
-            <LeftPanel :pokemon="pokemon"/>
+            <LeftPanel :pokemon="pokemon" />
             <RightPanel 
                 :pokemon="pokemon"
                 @increment="increment" 
@@ -25,7 +25,7 @@ import { AxiosResponse } from 'axios';
    }
 })
 export default class PokeDex extends Vue {
-    pokemon: Pokemon | {} = {};
+    pokemon: Pokemon | null = null;
     currentId: number = 1;
     loading: boolean = false;
 
@@ -52,8 +52,12 @@ export default class PokeDex extends Vue {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 $red: #f70002;
+
+body {
+ background-color: #000000;
+}
 
 .container {
     display: flex;

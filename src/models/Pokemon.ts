@@ -1,7 +1,3 @@
-export interface PokemonState {
-  pokemon: Pokemon | {};
-}
-
 export interface Pokemon {
   abilities: Ability[];
   base_experience: number;

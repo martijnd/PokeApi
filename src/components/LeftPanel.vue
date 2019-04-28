@@ -1,7 +1,7 @@
 <template>
     <div class="left-panel">
         <div class="picture-screen">
-            <!-- <img :src="pokemonPicture" alt="picture"> -->
+            <img :src="pokemonPicture" alt="picture">
         </div>
         <div class="controls">
 
