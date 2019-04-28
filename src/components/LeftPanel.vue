@@ -19,11 +19,7 @@ export default class LeftPanel extends Vue {
     @Prop() pokemon!: Pokemon;
 
     get pokemonPicture(): string {
-        return this.pokemon.sprites.front_default;
-    }
-
-    mounted() {
-        console.log(this.pokemon);
+        return `https://pokeres.bastionbot.org/images/pokemon/${this.pokemon.id}.png`;
     }
 }
 
@@ -32,7 +28,22 @@ export default class LeftPanel extends Vue {
 
 <style lang="scss" scoped>
 .left-panel {
+    position: relative;
     display: block;
     width: 300px;
+
+    .picture-screen {
+        position: absolute;
+        top: 150px;
+        left: 10px;
+        width: 250px;
+        height: 200px;
+        background-color: #e7e7e7;
+        padding: 10px;
+        img {
+            width: 150px;
+            margin: 20px;
+        }
+    }
 }
 </style>

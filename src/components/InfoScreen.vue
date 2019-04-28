@@ -17,7 +17,6 @@ export default class LeftPanel extends Vue {
     @Prop() pokemon!: Pokemon;
 
     get computedHeight(): number {
-        console.log(this.pokemon.name);
         return this.pokemon.height * 10;
     }
 
@@ -42,6 +41,7 @@ $background: #15FD00;
     .name {
         font-size: 20px;
         font-weight: 700;
+        text-transform: capitalize;
     }
     .wrapper {
         display: flex;

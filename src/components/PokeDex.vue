@@ -6,6 +6,7 @@
                 :pokemon="pokemon"
                 @increment="increment" 
                 @decrement="decrement" 
+                @changePokemon="changePokemon"
                 :loading="loading" />
         </div>  
     </div>
@@ -46,6 +47,10 @@ export default class PokeDex extends Vue {
         this.fetchPokemon(this.currentId - 1);
     }
 
+    changePokemon(value: number) {
+        this.fetchPokemon(value);
+    }
+
     mounted(): void {
         this.fetchPokemon(1);
     }
@@ -53,10 +58,10 @@ export default class PokeDex extends Vue {
 </script>
 
 <style lang="scss">
-$red: #f70002;
+$red: #be0a0a;
 
 body {
- background-color: #000000;
+    background-color: #000000;
 }
 
 .container {
