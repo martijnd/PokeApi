@@ -1,7 +1,7 @@
 <template>
     <div class="left-panel">
         <div class="picture-screen">
-            <img :src="pokemonPicture" alt="picture">
+            <img :src="this.pokemon.picture" alt="picture">
         </div>
         <div class="controls">
 
@@ -17,10 +17,6 @@ import { Pokemon } from '../models/Pokemon';
 @Component
 export default class LeftPanel extends Vue {
     @Prop() pokemon!: Pokemon;
-
-    get pokemonPicture(): string {
-        return `https://pokeres.bastionbot.org/images/pokemon/${this.pokemon.id}.png`;
-    }
 }
 
 </script>

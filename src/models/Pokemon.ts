@@ -11,6 +11,7 @@ export interface Pokemon {
   moves: Move[];
   name: string;
   order: number;
+  picture: string;
   species: Species;
   sprites: Sprites;
   stats: Stat[];

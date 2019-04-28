@@ -35,7 +35,8 @@ export default class PokeDex extends Vue {
         this.currentId = id;
         pokeapi.get(`${id}`).then((response: AxiosResponse<Pokemon>) => { 
             this.pokemon = response.data; 
-            this.loading = false; 
+            this.pokemon.picture = `https://pokeres.bastionbot.org/images/pokemon/${this.pokemon.id}.png`;
+            this.loading = false;
         });
     }
 
