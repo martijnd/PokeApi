@@ -19,12 +19,13 @@
       <text
         id="name"
         font-family="AvenirNext-Heavy, Avenir Next"
-        font-size="24"
+        font-size="20"
         x="215"
         y="170"
         font-weight="600"
         fill="#5C6BC0"
-        >{{ pokemon.name }}</text
+      >
+        {{ `#${pokemon.id} ${pokemon.name}` }}</text
       >
       <image
         :xlink:href="pokemon.picture"
@@ -35,7 +36,11 @@
       />
     </g>
     <g id="Top">
-      <g id="Prev-button" transform="translate(48.000000, 484.000000)">
+      <g
+        id="Prev-button"
+        transform="translate(48.000000, 484.000000)"
+        @click="decrement"
+      >
         <path
           d="M8.9735982,-3.62544108e-16 L181,0 L181,52 L8.9735982,52 C5.85328261,52 4.72178078,51.6751104 3.58104004,51.0650355 C2.4402993,50.4549607 1.54503929,49.5597007 0.934964463,48.41896 C0.324889639,47.2782192 1.40432378e-16,46.1467174 -2.41696072e-16,43.0264018 L2.41696072e-16,8.9735982 C-1.40432378e-16,5.85328261 0.324889639,4.72178078 0.934964463,3.58104004 C1.54503929,2.4402993 2.4402993,1.54503929 3.58104004,0.934964463 C4.72178078,0.324889639 5.85328261,2.10648567e-16 8.9735982,-3.62544108e-16 Z"
           id="Rectangle"
@@ -58,7 +63,11 @@
           <tspan x="78.2" y="33">PREV</tspan>
         </text>
       </g>
-      <g id="Next-button" transform="translate(230.000000, 484.000000)">
+      <g
+        id="Next-button"
+        transform="translate(230.000000, 484.000000)"
+        @click="increment"
+      >
         <path
           d="M8.9735982,-3.62544108e-16 L177,0 L177,52 L8.9735982,52 C5.85328261,52 4.72178078,51.6751104 3.58104004,51.0650355 C2.4402993,50.4549607 1.54503929,49.5597007 0.934964463,48.41896 C0.324889639,47.2782192 1.40432378e-16,46.1467174 -2.41696072e-16,43.0264018 L2.01805291e-15,8.9735982 C1.63592446e-15,5.85328261 0.324889639,4.72178078 0.934964463,3.58104004 C1.54503929,2.4402993 2.4402993,1.54503929 3.58104004,0.934964463 C4.72178078,0.324889639 5.85328261,2.10648567e-16 8.9735982,-3.62544108e-16 Z"
           id="Rectangle"
@@ -105,11 +114,33 @@ import { Pokemon } from "../models/Pokemon";
 @Component
 export default class LeftPanel extends Vue {
   @Prop() pokemon!: Pokemon;
+
+  disabled: boolean = false;
+
+  increment(): void {
+    if (!this.disabled) {
+      this.disabled = true;
+      this.$emit("increment");
+      setTimeout(() => (this.disabled = false), 600);
+    }
+  }
+  decrement(): void {
+    if (!this.disabled) {
+      this.disabled = true;
+      this.$emit("decrement");
+      setTimeout(() => (this.disabled = false), 600);
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 #name {
   text-transform: capitalize;
+}
+
+#Next-button,
+#Prev-button {
+  cursor: pointer;
 }
 </style>

@@ -14,12 +14,14 @@
         fill="none"
         fill-rule="evenodd"
       >
-        <LeftPanel :pokemon="pokemon" />
-        <Spine />
-        <RightPanel
+        <LeftPanel
           :pokemon="pokemon"
           @increment="increment"
           @decrement="decrement"
+        />
+        <Spine />
+        <RightPanel
+          :pokemon="pokemon"
           @changePokemon="changePokemon"
           :loading="loading"
         />
@@ -46,7 +48,7 @@ import { AxiosResponse } from "axios";
 })
 export default class PokeDex extends Vue {
   pokemon: Pokemon | null = null;
-  currentId: number = 1;
+  currentId: number = 4;
   loading: boolean = false;
 
   async fetchPokemon(id: number): Promise<void> {
@@ -74,7 +76,7 @@ export default class PokeDex extends Vue {
   }
 
   mounted(): void {
-    this.fetchPokemon(1);
+    this.fetchPokemon(this.currentId);
   }
 }
 </script>

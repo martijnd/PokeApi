@@ -676,20 +676,15 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { Pokemon } from "../models/Pokemon";
-import InfoScreen from "./InfoScreen.vue";
 
-@Component({
-  components: {
-    InfoScreen
-  }
-})
+@Component({})
 export default class RightPanel extends Vue {
   @Prop() pokemon!: Pokemon;
   @Prop() loading!: boolean;
 
-  inputId: string = "1";
-  reset = true;
-  entered = false;
+  inputId: string = this.pokemon.id.toString();
+  reset: boolean = true;
+  entered: boolean = false;
 
   addToInputId(number: number): void {
     if (this.reset) {
@@ -722,12 +717,6 @@ export default class RightPanel extends Vue {
     this.inputId = "";
   }
 
-  increment(): void {
-    this.$emit("increment");
-  }
-  decrement(): void {
-    this.$emit("decrement");
-  }
   changePokemon(event: Event): void {
     this.$emit("changePokemon", (event.target as HTMLInputElement).value);
   }
