@@ -709,6 +709,7 @@ export default class RightPanel extends Vue {
 
   pressBackspace(): void {
     if (this.inputId.length > 0) {
+      this.reset = false;
       this.inputId = this.inputId.slice(0, -1);
     }
   }
