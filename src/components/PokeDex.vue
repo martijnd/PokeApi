@@ -1,80 +1,86 @@
 <template>
-    <div class="container">
-        <div v-if="pokemon" class="pokedex-wrapper">
-            <LeftPanel :pokemon="pokemon" />
-            <RightPanel 
-                :pokemon="pokemon"
-                @increment="increment" 
-                @decrement="decrement" 
-                @changePokemon="changePokemon"
-                :loading="loading" />
-        </div>  
-    </div>
+  <div class="container">
+    <svg
+      viewBox="0 0 1440 720"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      v-if="pokemon"
+    >
+      <g
+        id="Pokedex"
+        stroke="none"
+        stroke-width="1"
+        fill="none"
+        fill-rule="evenodd"
+      >
+        <LeftPanel :pokemon="pokemon" />
+        <Spine />
+        <RightPanel
+          :pokemon="pokemon"
+          @increment="increment"
+          @decrement="decrement"
+          @changePokemon="changePokemon"
+          :loading="loading"
+        />
+      </g>
+    </svg>
+  </div>
 </template>
- 
+
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
-import { Pokemon } from '../models/Pokemon';
-import LeftPanel from './LeftPanel.vue';
-import RightPanel from './RightPanel.vue';
-import pokeapi from '../api/pokeapi';
-import { AxiosResponse } from 'axios';
- 
+import { Component, Prop, Vue } from "vue-property-decorator";
+import { Pokemon } from "../models/Pokemon";
+import LeftPanel from "./LeftPanel.vue";
+import RightPanel from "./RightPanel.vue";
+import Spine from "./Spine.vue";
+import pokeapi from "../api/pokeapi";
+import { AxiosResponse } from "axios";
+
 @Component({
-   components: {
-       LeftPanel, RightPanel
-   }
+  components: {
+    LeftPanel,
+    RightPanel,
+    Spine
+  }
 })
 export default class PokeDex extends Vue {
-    pokemon: Pokemon | null = null;
-    currentId: number = 1;
-    loading: boolean = false;
+  pokemon: Pokemon | null = null;
+  currentId: number = 1;
+  loading: boolean = false;
 
-    async fetchPokemon(id: number): Promise<void> {
-        this.loading = true;
-        this.currentId = id;
-        pokeapi.get(`${id}`).then((response: AxiosResponse<Pokemon>) => { 
-            this.pokemon = response.data; 
-            this.pokemon.picture = `https://pokeres.bastionbot.org/images/pokemon/${this.pokemon.id}.png`;
-            this.loading = false;
-        });
-    }
+  async fetchPokemon(id: number): Promise<void> {
+    this.loading = true;
+    this.currentId = id;
+    pokeapi.get(`${id}`).then((response: AxiosResponse<Pokemon>) => {
+      this.pokemon = response.data;
+      this.pokemon.picture = `https://pokeres.bastionbot.org/images/pokemon/${
+        this.pokemon.id
+      }.png`;
+      this.loading = false;
+    });
+  }
 
-    increment(): void {
-        this.fetchPokemon(this.currentId + 1);
-    }
+  increment(): void {
+    this.fetchPokemon(this.currentId + 1);
+  }
 
-    decrement(): void {
-        this.fetchPokemon(this.currentId - 1);
-    }
+  decrement(): void {
+    this.fetchPokemon(this.currentId - 1);
+  }
 
-    changePokemon(value: number) {
-        this.fetchPokemon(value);
-    }
+  changePokemon(value: number) {
+    this.fetchPokemon(value);
+  }
 
-    mounted(): void {
-        this.fetchPokemon(1);
-    }
+  mounted(): void {
+    this.fetchPokemon(1);
+  }
 }
 </script>
 
 <style lang="scss">
-$red: #be0a0a;
-
 body {
-    background-color: #000000;
-}
-
-.container {
-    display: flex;
-    justify-content: center;
-    .pokedex-wrapper {
-        display: flex;
-        background-color: $red;
-        width: 600px;
-        height: 600px;
-        flex-direction: row;
-        align-items: stretch;
-    }
+  background-color: #3b3333;
 }
 </style>
